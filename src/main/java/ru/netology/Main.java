@@ -6,36 +6,20 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class Main {
     public static void main(String[] args) {
 
-        // Пауза между поступлениями звонков
-        final int SLEEP_TIME = 1000;
-        // Количество вызовов за раз
-        final int CALLS_PER_SECOND = 60;
+        Atc atc = new Atc();
+        Operator operator = new Operator(atc);
+        ThreadGroup operatorGroup = new ThreadGroup("operatorGroup");
 
-        // Генерация случайных телефонных номеров
-        Random random = new Random();
-        long numbers = random.nextInt(1_000_000_000) + (random.nextInt(90) + 10) * 1_000_000_000L;
+        Thread threadCalls = new Thread(null, atc, "АТС");
+      //  Thread threadOperator1 = new Thread(operatorGroup, operator, "Оператор1");
+      //  Thread threadOperator2 = new Thread(operatorGroup, operator, "Оператор2");
+      //  Thread threadOperator3 = new Thread(operatorGroup, operator, "Оператор3");
+       // threadCalls.setDaemon(true);
 
-
-        PriorityBlockingQueue<Long> queue = new PriorityBlockingQueue<>();
-
-        Runnable r = () -> {
-            try {
-                while (!Thread.currentThread().isInterrupted()) {
-                    for (int i = 0; i < CALLS_PER_SECOND; i++) {
-                        queue.add(numbers);
-
-                    }
-                    System.out.println("От " + Thread.currentThread().getName() + " поступило множество звонков");
-                    Thread.sleep(SLEEP_TIME);
-                }
-            } catch (InterruptedException err) {
-                Thread.currentThread().interrupt();
-            }
-        };
-
-        Thread threadCalls = new Thread(null, r, "АТС");
 
         threadCalls.start();
-
+       // threadOperator1.start();
+       // threadOperator2.start();
+       // threadOperator3.start();
     }
 }
