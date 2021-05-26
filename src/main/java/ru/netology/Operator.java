@@ -1,12 +1,8 @@
 package ru.netology;
 
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
-
 public class Operator implements Runnable {
 
     Atc atc;
-    ReentrantLock lock = new ReentrantLock();
 
     public Operator(Atc atc) {
         this.atc = atc;
@@ -14,14 +10,20 @@ public class Operator implements Runnable {
 
     @Override
     public void run() {
-        lock.lock();
         try {
-            atc.queue.forEach(System.out::println);
-            Thread.sleep(3000);
+            while (true) {
+                if (atc.queue.size() != 0) {
+                    Thread.currentThread().interrupt();
+                    System.out.println(Thread.currentThread().getName() + " принимает вызов...");
+                    atc.queue.poll();
+                    Thread.sleep(2000);
+                } else {
+                    System.out.println("Звонков не осталось");
+                    break;
+                }
+            }
         } catch (InterruptedException err) {
             Thread.currentThread().interrupt();
-        } finally {
-            lock.unlock();
         }
     }
 }

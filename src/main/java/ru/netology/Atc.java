@@ -1,16 +1,22 @@
 package ru.netology;
 
-import java.util.Random;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Atc implements Runnable {
 
+    ConcurrentLinkedQueue<Long> queue = new ConcurrentLinkedQueue<>();
+
     // Пауза между поступлениями звонков
-    private final int SLEEP_TIME = 3000;
+    private final int SLEEP_TIME = 1;
     // Количество вызовов за раз
-    private final int CALLS_PER_SECOND = 2;
+    private final int CALLS_PER_SECOND = 5;
     // Количество итераций за сутки
-    private final int ITERATION = 6;
+    private final int ITERATION = 3;
+
+    ReentrantLock lock = new ReentrantLock();
+
 
 
 
@@ -18,10 +24,10 @@ public class Atc implements Runnable {
     Random random = new Random();
 
 
-    PriorityBlockingQueue<Long> queue = new PriorityBlockingQueue<>();
 
     @Override
     public void run() {
+        lock.lock();
         try {
             int count = 0;
             while (true) {
@@ -32,17 +38,17 @@ public class Atc implements Runnable {
                     for (int i = 0; i < CALLS_PER_SECOND; i++) {
                         long numbers = random.nextInt(1_000_000_000) + (random.nextInt(90) + 10) * 1_000_000_000L;
                         queue.add(numbers);
-                        System.out.println(queue);
-                        Thread.sleep(SLEEP_TIME);
+                        System.out.println(queue.toString());
                         count++;
+                        Thread.sleep(SLEEP_TIME);
                     }
-                } else {
-                    Thread.currentThread().interrupt();
                 }
             }
             //System.out.println("От " + Thread.currentThread().getName() + " поступило множество звонков");
         } catch (InterruptedException err) {
             Thread.currentThread().interrupt();
+        } finally {
+            lock.unlock();
         }
     }
 }
