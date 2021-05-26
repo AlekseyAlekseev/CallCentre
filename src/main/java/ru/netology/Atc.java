@@ -2,7 +2,6 @@ package ru.netology;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Atc implements Runnable {
 
@@ -15,19 +14,13 @@ public class Atc implements Runnable {
     // Количество итераций за сутки
     private final int ITERATION = 3;
 
-    ReentrantLock lock = new ReentrantLock();
-
-
-
 
     // Генерация случайных телефонных номеров
     Random random = new Random();
 
 
-
     @Override
     public void run() {
-        lock.lock();
         try {
             int count = 0;
             while (true) {
@@ -47,8 +40,6 @@ public class Atc implements Runnable {
             //System.out.println("От " + Thread.currentThread().getName() + " поступило множество звонков");
         } catch (InterruptedException err) {
             Thread.currentThread().interrupt();
-        } finally {
-            lock.unlock();
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.netology;
 
+
 public class Operator implements Runnable {
 
     Atc atc;

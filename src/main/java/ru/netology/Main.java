@@ -22,8 +22,8 @@ public class Main {
 
 
         threadCalls.start();
-       // Thread.sleep(2000);
-       // threadOperator1.start();
+        Thread.sleep(2000);
+        threadOperator1.start();
         //threadOperator2.start();
        // threadOperator3.start();
     }
