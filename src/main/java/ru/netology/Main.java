@@ -14,6 +14,8 @@ public class Main {
         new Thread(null, new Operator(atc), "Оператор1").start();
         new Thread(null, new Operator(atc), "Оператор2").start();
         new Thread(null, new Operator(atc), "Оператор3").start();
+        new Thread(null, new Operator(atc), "Оператор4").start();
+        new Thread(null, new Operator(atc), "Оператор5").start();
 
     }
 

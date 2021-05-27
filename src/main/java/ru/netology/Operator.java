@@ -5,7 +5,7 @@ public class Operator implements Runnable {
 
     Atc atc;
 
-    private final static int SLEEP = 2000;
+    private final static int SLEEP = 1500;
 
     public Operator(Atc atc) {
         this.atc = atc;

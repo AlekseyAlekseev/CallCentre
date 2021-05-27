@@ -10,9 +10,9 @@ public class Atc implements Runnable {
     // Пауза между поступлениями звонков
     private static final int SLEEP_TIME = 1;
     // Количество вызовов за раз
-    private static final int CALLS_PER_SECOND = 20;
+    private static final int CALLS_PER_SECOND = 60;
     // Количество итераций за сутки
-    private static final int ITERATION = 2;
+    private static final int ITERATION = 1;
 
 
     // Генерация случайных телефонных номеров
@@ -24,12 +24,9 @@ public class Atc implements Runnable {
         try {
             int count = 0;
             while (true) {
-                if (count == ITERATION) {
-                    break;
-                }
                 if (count < ITERATION) {
                     for (int i = 0; i < CALLS_PER_SECOND; i++) {
-                        long numbers = (random.nextInt(90) + 1552634) + 89220000000L;
+                        long numbers = (random.nextInt(1552634) + 143) + 89220000000L;
                         queue.add(numbers);
                         count++;
                         Thread.sleep(SLEEP_TIME);
