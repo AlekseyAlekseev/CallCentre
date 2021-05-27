@@ -5,6 +5,8 @@ public class Operator implements Runnable {
 
     Atc atc;
 
+    private final static int SLEEP = 2000;
+
     public Operator(Atc atc) {
         this.atc = atc;
     }
@@ -14,10 +16,8 @@ public class Operator implements Runnable {
         try {
             while (true) {
                 if (atc.queue.size() != 0) {
-                    Thread.currentThread().interrupt();
-                    System.out.println(Thread.currentThread().getName() + " принимает вызов...");
-                    atc.queue.poll();
-                    Thread.sleep(2000);
+                    System.out.println(Thread.currentThread().getName() + " принимает вызов: " + atc.queue.poll());
+                    Thread.sleep(SLEEP);
                 } else {
                     System.out.println("Звонков не осталось");
                     break;

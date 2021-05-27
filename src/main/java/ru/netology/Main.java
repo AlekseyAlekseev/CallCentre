@@ -1,30 +1,30 @@
 package ru.netology;
 
-import java.util.Random;
-import java.util.concurrent.PriorityBlockingQueue;
-
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Atc atc = new Atc();
-        //Operator operator = new Operator(atc);
-
-
-        ThreadGroup operatorGroup = new ThreadGroup("operatorGroup");
-
-        //atc.getValues();
-
 
         Thread threadCalls = new Thread(null, atc, "АТС");
-        Thread threadOperator1 = new Thread(operatorGroup, new Operator(atc), "Оператор1");
-       // Thread threadOperator2 = new Thread(operatorGroup, new Operator(atc), "Оператор2");
-      //  Thread threadOperator3 = new Thread(operatorGroup, operator, "Оператор3");
 
-
+        threadCalls.setDaemon(true);
         threadCalls.start();
-        Thread.sleep(2000);
-        threadOperator1.start();
-        //threadOperator2.start();
-       // threadOperator3.start();
+        getThreadSleep();
+
+        new Thread(null, new Operator(atc), "Оператор1").start();
+        new Thread(null, new Operator(atc), "Оператор2").start();
+        new Thread(null, new Operator(atc), "Оператор3").start();
+
+    }
+
+    /**
+     * Простой таймаут потока для генерации звонков
+     */
+    private static void getThreadSleep() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

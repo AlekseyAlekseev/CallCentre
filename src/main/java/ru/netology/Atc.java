@@ -8,11 +8,11 @@ public class Atc implements Runnable {
     ConcurrentLinkedQueue<Long> queue = new ConcurrentLinkedQueue<>();
 
     // Пауза между поступлениями звонков
-    private final int SLEEP_TIME = 1;
+    private static final int SLEEP_TIME = 1;
     // Количество вызовов за раз
-    private final int CALLS_PER_SECOND = 5;
+    private static final int CALLS_PER_SECOND = 20;
     // Количество итераций за сутки
-    private final int ITERATION = 3;
+    private static final int ITERATION = 2;
 
 
     // Генерация случайных телефонных номеров
@@ -29,15 +29,13 @@ public class Atc implements Runnable {
                 }
                 if (count < ITERATION) {
                     for (int i = 0; i < CALLS_PER_SECOND; i++) {
-                        long numbers = random.nextInt(1_000_000_000) + (random.nextInt(90) + 10) * 1_000_000_000L;
+                        long numbers = (random.nextInt(90) + 1552634) + 89220000000L;
                         queue.add(numbers);
-                        System.out.println(queue.toString());
                         count++;
                         Thread.sleep(SLEEP_TIME);
                     }
                 }
             }
-            //System.out.println("От " + Thread.currentThread().getName() + " поступило множество звонков");
         } catch (InterruptedException err) {
             Thread.currentThread().interrupt();
         }
