@@ -15,7 +15,7 @@ public class Operator implements Runnable {
     public void run() {
         try {
             while (true) {
-                if (atc.queue.size() != 0) {
+                if (!atc.queue.isEmpty()) {
                     System.out.println(Thread.currentThread().getName() + " принимает вызов: " + atc.queue.poll());
                     Thread.sleep(SLEEP);
                 } else {
